@@ -29,7 +29,7 @@ jobs:
           --windowed \
           --name "自动上传" \
           --clean \
-          main-ui.py
+          main_ui.py
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
