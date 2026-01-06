@@ -1,0 +1,38 @@
+name: Build macOS App
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: Build app
+      run: |
+        # 简单构建命令
+        pyinstaller \
+          --windowed \
+          --name "自动上传" \
+          --clean \
+          main-ui.py
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: macOS-App
+        path: dist/
